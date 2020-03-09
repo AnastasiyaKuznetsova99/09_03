@@ -20,12 +20,17 @@ public:
 	{}
 
 	~Timer() noexcept
-	{}
+	{
+		/*auto end = clock_t::now();
+		std::cout << "lead time: " << std::chrono::duration_cast <std::chrono::microseconds>(end -
+			begin).count() << std::endl;*/
+	}
 
 	void stop()
 	{
 		auto end = clock_t::now();
-		std::cout << "lead time: " << std::chrono::duration_cast <std::chrono::milliseconds>(end - begin).count() << std::endl;
+		std::cout << "lead time: " << std::chrono::duration_cast <std::chrono::microseconds>(end -
+			begin).count() << std::endl;
 	}
 };
 
@@ -39,17 +44,10 @@ int main()
 
 	std::set<int> mySet;
 
-	Timer myTimer_1;
-	for (int i = 0; i < 200000; i++)
-	{
-		mySet.insert(gen());
-	}
-	myTimer_1.stop();
-
 
 	Timer myTimer_2;
 	std::vector<int> myVector;
-	for (int i = 0; i < 200000; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		myVector.push_back(gen());
 	}
@@ -57,11 +55,19 @@ int main()
 	myTimer_2.stop();
 
 
-	Timer myTimer_3;
-	std::array<int, 200000> myArray;
-	for (int i = 0; i < 200000; i++)
+	Timer myTimer_1;
+	for (int i = 0; i < 10; i++)
 	{
-		myArray[i] = gen();
+		mySet.insert(myVector[i]);
+	}
+	myTimer_1.stop();
+
+
+	Timer myTimer_3;
+	std::array<int, 10> myArray;
+	for (int i = 0; i < 10; i++)
+	{
+		myArray[i] = myVector[i];
 	}
 	std::sort(myArray.begin(), myArray.end());
 	myTimer_3.stop();
